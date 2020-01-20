@@ -1,6 +1,6 @@
-# TFMR - A Terraform Helper
+# T7M - A Terraform Helper
 
-TFMR is a simple wrapper around Terraform that helps manage multiple instances of
+t7m is a simple wrapper around Terraform that helps manage multiple instances of
 the same terraform stack using variable files and uniquely prefixed remote states.
 It exists to reduce the need to type long command line arguments.
 
@@ -21,12 +21,12 @@ Users of workspaces must also take care to select the correct one before running
 ## Examples:
 
 ```
-    tfmr foo/bar plan
-    tfmr foo/bar apply -auto-approve
+    t7m foo/bar plan
+    t7m foo/bar apply -auto-approve
 ```
 
 In the above examples, the vars file `foo/bar.tfvars` will be used and must exist.
 The remote state prefix will be `foo/bar` and the state will end up in the bucket set in the
 provider block, with a path of `/foo/bar/terraform.tfstate`.
 
-TFMR has only been tested on Google Cloud so far.
+t7m has only been tested on Google Cloud so far.

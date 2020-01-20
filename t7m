@@ -18,14 +18,14 @@ function usage() {
     cat - >&2 <<EOF
 Usage: $0 CONFIG_DIR terraform_args...
 
-TFMR is a simple wrapper around Terraform that helps manage multiple instances of
+t7m is a simple wrapper around Terraform that helps manage multiple instances of
 the same terraform stack using variable files and uniquely prefixed remote states.
 It exists to reduce the need to type long command line arguments.
 
 Examples:
 
-    tfmr foo/bar plan
-    tfmr foo/bar apply -auto-approve
+    t7m foo/bar plan
+    t7m foo/bar apply -auto-approve
 
 In the above examples, the vars file 'foo/bar.tfvars' will be used and must exist.
 EOF
