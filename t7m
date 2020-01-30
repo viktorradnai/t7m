@@ -50,5 +50,5 @@ shift
 
 echo "Using remote state prefix '$REMOTE_STATE_PREFIX' and vars file '$VAR_FILE'."
 set -x
-terraform init -backend-config="prefix=$REMOTE_STATE_PREFIX"
-terraform $* -var-file="$VAR_FILE"
+terraform init -backend-config="prefix=$REMOTE_STATE_PREFIX" < /dev/null
+terraform $* -var-file="$VAR_FILE" -input=false
