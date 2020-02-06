@@ -37,6 +37,7 @@ if [[ -z "$1" || -z "$2" ]]; then
 fi
 
 CONFIG_BASE=$1
+TERRAFORM_COMMAND=$2
 STACK_NAME=`basename $PWD`
 VAR_FILE="$CONFIG_BASE.tfvars"
 REMOTE_STATE_PREFIX="$STACK_NAME/$CONFIG_BASE"
@@ -46,9 +47,14 @@ if [[ ! -f "$VAR_FILE" ]]; then
     usage
 fi
 
-shift
+shift 2
 
 echo "Using remote state prefix '$REMOTE_STATE_PREFIX' and vars file '$VAR_FILE'."
 set -x
 terraform init -backend-config="prefix=$REMOTE_STATE_PREFIX" < /dev/null
-terraform $* -var-file="$VAR_FILE" -input=false
+
+case $TERRAFORM_COMMAND in
+    state) terraform $TERRAFORM_COMMAND $* ;;
+    apply) terraform $TERRAFORM_COMMAND -var-file="$VAR_FILE" -input=false $*;;
+    *) terraform $TERRAFORM_COMMAND -var-file="$VAR_FILE" $* ;;
+esac
