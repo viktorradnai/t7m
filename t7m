@@ -36,6 +36,7 @@ if [[ -z "$1" || -z "$2" ]]; then
     usage
 fi
 
+TERRAFORM_BIN=${TERRAFORM_BIN:-terraform}
 CONFIG_BASE=$1
 TERRAFORM_COMMAND=$2
 STACK_NAME=`basename $PWD`
@@ -51,10 +52,10 @@ shift 2
 
 echo "Using remote state prefix '$REMOTE_STATE_PREFIX' and vars file '$VAR_FILE'."
 set -x
-terraform init -backend-config="$VAR_FILE" -backend-config="prefix=$REMOTE_STATE_PREFIX" < /dev/null
+$TERRAFORM_BIN init -backend-config="$VAR_FILE" -backend-config="prefix=$REMOTE_STATE_PREFIX" < /dev/null
 
 case $TERRAFORM_COMMAND in
-    state) terraform $TERRAFORM_COMMAND $* ;;
-    apply) terraform $TERRAFORM_COMMAND -var-file="$VAR_FILE" -input=false $*;;
-    *) terraform $TERRAFORM_COMMAND -var-file="$VAR_FILE" $* ;;
+    state) $TERRAFORM_BIN $TERRAFORM_COMMAND $* ;;
+    apply) $TERRAFORM_BIN $TERRAFORM_COMMAND -var-file="$VAR_FILE" -input=false $*;;
+    *) $TERRAFORM_BIN $TERRAFORM_COMMAND -var-file="$VAR_FILE" $* ;;
 esac
