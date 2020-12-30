@@ -37,7 +37,7 @@ if [[ -z "$1" || -z "$2" ]]; then
 fi
 
 TERRAFORM_BIN=${TERRAFORM_BIN:-terraform}
-CONFIG_BASE=$1
+CONFIG_BASE=`dirname $1`/`basename $1 .tfvars`
 TERRAFORM_COMMAND=$2
 STACK_NAME=`basename $PWD`
 VAR_FILE="$CONFIG_BASE.tfvars"
@@ -56,6 +56,6 @@ $TERRAFORM_BIN init -backend-config="$VAR_FILE" -backend-config="prefix=$REMOTE_
 
 case $TERRAFORM_COMMAND in
     state) $TERRAFORM_BIN $TERRAFORM_COMMAND $* ;;
-    apply) $TERRAFORM_BIN $TERRAFORM_COMMAND -var-file="$VAR_FILE" -input=false $*;;
+    apply) $TERRAFORM_BIN $TERRAFORM_COMMAND -var-file="$VAR_FILE" -input=false $* ;;
     *) $TERRAFORM_BIN $TERRAFORM_COMMAND -var-file="$VAR_FILE" $* ;;
 esac
